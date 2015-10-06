@@ -15,6 +15,10 @@ d <- data.frame(x1=x1, x2=x2, y=y)
 md <- glm(y ~ ., data = d, family = binomial())
 md
 
+#Coefficients:
+#(Intercept)          x1b          x1c           x2  
+#    0.02925      1.01760     -0.03212     10.28583  
+
 
 predict(md, newdata = data.frame(x1="a", x2=0.3), type = "response")
 predict(md, newdata = data.frame(x1="d", x2=0.3), type = "response")
@@ -35,6 +39,12 @@ h2oServer <- h2o.init()
 dx <- as.h2o(h2oServer, d)
 
 md <- h2o.glm(x = 1:2, y = 3, data = dx, family = "binomial", alpha = 1, lambda = 0)
+md
+
+#Coefficients:
+#     x1.b      x1.c        x2 Intercept 
+#  1.01742  -0.03210  10.28373   0.02923 
+
 
 h2o.predict(md, as.h2o(h2oServer, data.frame(x1="a", x2=0.3)))[,3]
 h2o.predict(md, as.h2o(h2oServer, data.frame(x1="d", x2=0.3)))[,3]
